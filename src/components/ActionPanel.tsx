@@ -42,7 +42,7 @@ export default function ActionPanel({ state, onExecute }: Props) {
     },
     {
       type: 'talk' as ActionType,
-      name: '组织谈话',
+      name: '组织关怀',
       description: '安抚专家情绪',
       icon: MessageCircle,
       available: isActionAvailable(state, 'talk'),
@@ -220,7 +220,7 @@ export default function ActionPanel({ state, onExecute }: Props) {
       <div className="card-archive">
         <h3 className="text-gobi-200 font-bold mb-3 font-serif-cn flex items-center gap-2">
           <ChevronRight className="w-5 h-5" />
-          {selectedAction === 'focus' ? '选择攻关专家' : '选择谈话对象'}
+          {selectedAction === 'focus' ? '选择攻关专家' : '选择关怀对象'}
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {relevantExperts.map((expert) => (
@@ -283,7 +283,7 @@ export default function ActionPanel({ state, onExecute }: Props) {
     );
   }
 
-  // 谈话目标
+  // 关怀目标
   if (subPhase === 'selectTalkTarget') {
     const targets = state.experts.filter(e => e.status === 'active' && e.familyConcern > 30);
 
@@ -291,7 +291,7 @@ export default function ActionPanel({ state, onExecute }: Props) {
       <div className="card-archive">
         <h3 className="text-gobi-200 font-bold mb-3 font-serif-cn flex items-center gap-2">
           <ChevronRight className="w-5 h-5" />
-          选择需要谈话的专家
+          选择需要关怀的专家
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {targets.map((expert) => (
@@ -308,7 +308,7 @@ export default function ActionPanel({ state, onExecute }: Props) {
           ))}
         </div>
         {targets.length === 0 && (
-          <p className="text-gobi-500 text-center py-4">所有专家状态良好，无需谈话。</p>
+          <p className="text-gobi-500 text-center py-4">所有专家状态良好，无需关怀。</p>
         )}
         <button onClick={reset} className="mt-3 text-gobi-500 text-sm hover:text-gobi-300">
           ← 返回

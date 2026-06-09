@@ -329,7 +329,7 @@ export function executeSeekHelp(state: GameState, deptId: DepartmentId): { state
   };
 }
 
-// 执行"组织谈话"
+// 执行"组织关怀"
 export function executeTalk(state: GameState, expertId: string): { state: GameState; message: string } {
   const expert = state.experts.find((e) => e.id === expertId);
   if (!expert) return { state, message: '未找到该专家' };
