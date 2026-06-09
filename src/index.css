@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-gobi-50: #f9f7f4;
+  --color-gobi-100: #f0ebe3;
+  --color-gobi-200: #e0d5c5;
+  --color-gobi-300: #ccb99f;
+  --color-gobi-400: #b89d7a;
+  --color-gobi-500: #a6835c;
+  --color-gobi-600: #9a7550;
+  --color-gobi-700: #7f5e43;
+  --color-gobi-800: #684d3a;
+  --color-gobi-900: #554032;
+  --color-gobi-950: #2d2118;
+  --color-archive-paper: #f4f1ea;
+  --color-archive-ink: #2c2416;
+  --color-archive-faded: #8b7d6b;
+  --color-archive-stamp: #c41e3a;
+  --font-serif-cn: "Noto Serif SC", serif;
+  --font-sans-cn: "Noto Sans SC", sans-serif;
+  --font-mono-cn: "Noto Sans Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-gobi-950 text-gobi-100;
+    font-family: var(--font-sans-cn);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  ::selection {
+    @apply bg-archive-stamp/30 text-white;
+  }
+}
+
+@layer components {
+  .card-archive {
+    @apply bg-gobi-900/60 border border-gobi-700/50 rounded-lg p-4;
+    backdrop-filter: blur(4px);
+  }
+
+  .btn-primary {
+    @apply px-5 py-2.5 bg-archive-stamp/90 text-white rounded-md;
+    @apply hover:bg-archive-stamp transition-colors;
+    @apply font-medium tracking-wide;
+    @apply disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 bg-gobi-800/80 text-gobi-200 rounded-md;
+    @apply hover:bg-gobi-700 transition-colors;
+    @apply border border-gobi-600/50;
+    @apply disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .progress-bar {
+    @apply h-2.5 bg-gobi-800 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+  }
+
+  .font-serif-cn {
+    font-family: var(--font-serif-cn);
+  }
+
+  .font-sans-cn {
+    font-family: var(--font-sans-cn);
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+}
