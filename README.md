@@ -1,73 +1,255 @@
-# React + TypeScript + Vite
+# 《代号：596》—— 两弹一星精神主题策略游戏
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> "596"是中国第一颗原子弹的工程代号——1959 年 6 月，苏联撤走全部专家，中国决定自力更生研制原子弹。
 
-Currently, two official plugins are available:
+《代号：596》是一款**回合制策略网页游戏**，以中国第一颗原子弹研制工程为历史背景。玩家扮演罗布泊基地的总调度，在 20 轮内协调四个部门、完成三项核心攻关，通过决策体验**"自力更生、大力协同、无私奉献"**的两弹一星精神。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 目录
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [快速开始（零基础）](#快速开始零基础)
+- [前置要求](#前置要求)
+- [从零部署](#从零部署)
+- [项目结构](#项目结构)
+- [可用脚本](#可用脚本)
+- [部署到线上](#部署到线上)
+- [技术栈](#技术栈)
+- [游戏机制简介](#游戏机制简介)
+- [项目背景](#项目背景)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 快速开始（零基础）
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+如果你从未接触过前端开发，按以下 5 步操作即可在本地运行游戏：
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# 第 1 步：安装 Node.js（见下方"前置要求"）
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 第 2 步：克隆项目
+git clone <你的仓库地址>
+cd <仓库文件夹>
+
+# 第 3 步：安装依赖（首次运行需要，约 1 分钟）
+npm install
+
+# 第 4 步：启动开发服务器
+npm run dev
+
+# 第 5 步：打开浏览器，访问终端提示的地址（默认 http://localhost:5173）
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+运行成功后，你会在浏览器中看到游戏的开始画面。修改代码保存后，页面会自动刷新。
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 前置要求
+
+| 工具 | 最低版本 | 说明 |
+|------|----------|------|
+| **Node.js** | 18.x 或更高 | JavaScript 运行环境 |
+| **npm** | 9.x 或更高 | 随 Node.js 自动安装的包管理器 |
+
+### 安装 Node.js
+
+- **Windows/macOS**：前往 [nodejs.org](https://nodejs.org) 下载 LTS 版本，双击安装
+- **Linux**：建议使用系统包管理器或 nvm
+
+验证安装是否成功：
+
+```bash
+node -v   # 应输出 v18.x.x 或更高
+npm -v    # 应输出 9.x.x 或更高
 ```
+
+---
+
+## 从零部署
+
+> 以下步骤适用于任何操作系统（Windows / macOS / Linux），仅需一个终端。
+
+### 1. 获取代码
+
+```bash
+git clone <仓库地址>
+cd game-project      # 或用你的实际文件夹名
+```
+
+如果你下载的是压缩包，解压后用终端 `cd` 进入解压后的目录即可。
+
+### 2. 安装依赖
+
+```bash
+npm install
+```
+
+这一步会读取 `package.json`，自动下载项目需要的所有第三方库（React、Tailwind CSS、Framer Motion 等），安装到 `node_modules/` 目录。**仅首次运行需要此步骤。**
+
+### 3. 开发模式（实时预览 + 热更新）
+
+```bash
+npm run dev
+```
+
+终端会显示：
+
+```
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.x.x:5173/
+```
+
+打开浏览器访问 `http://localhost:5173` 即可看到游戏。**修改任意代码保存后，浏览器会自动刷新。**
+
+### 4. 生产构建（生成可部署的静态文件）
+
+```bash
+npm run build
+```
+
+构建产物在 `dist/` 目录中，包含三个文件：
+
+```
+dist/
+├── index.html          # 入口页面
+└── assets/
+    ├── index-xxxxx.css  # 样式文件（约 25 KB）
+    └── index-xxxxx.js   # JS 逻辑文件（约 365 KB）
+```
+
+`dist/` 目录是**完全自包含的静态文件**，可以直接丢到任何服务器上运行。
+
+### 5. 本地预览生产版本
+
+```bash
+npm run preview
+```
+
+这会在本地启动一个静态服务器，模拟生产环境的运行效果。
+
+---
+
+## 项目结构
+
+```
+.
+├── index.html              # HTML 入口
+├── package.json            # 项目元信息 + 依赖列表
+├── vite.config.ts          # Vite 构建配置
+├── tsconfig.json           # TypeScript 配置
+├── postcss.config.js       # PostCSS 配置（Tailwind CSS 使用）
+├── docs/                   # 项目文档
+│   ├── details.md          # 原始游戏设计文档
+│   ├── game-intro.md       # 游戏详细介绍
+│   └── speech-script.md    # 课堂汇报讲稿
+├── src/
+│   ├── main.tsx            # 应用入口
+│   ├── App.tsx             # 根组件（路由不同阶段：开始/游戏/结局）
+│   ├── index.css           # 全局样式 + Tailwind 指令 + 自定义组件样式
+│   ├── types/
+│   │   └── index.ts        # TypeScript 类型定义（GameState、Expert、Department 等）
+│   ├── data/
+│   │   ├── departments.ts  # 四个部门的初始数据
+│   │   ├── experts.ts      # 8 位专家的数据（代号、属性、效率）
+│   │   └── events.ts       # 技术卡点事件库 + 特殊随机事件（"北京来电"等）
+│   ├── utils/
+│   │   └── gameLogic.ts    # 核心游戏逻辑（回合推进、行动执行、结局判定）
+│   ├── hooks/
+│   │   └── useGameState.ts # 游戏状态管理（React useReducer）
+│   └── components/
+│       ├── StartScreen.tsx     # 开始画面
+│       ├── GameBoard.tsx       # 主游戏面板（状态栏 + 部门 + 专家 + 行动面板）
+│       ├── DepartmentCard.tsx  # 单个部门卡片（进度条 + 联动信息）
+│       ├── ActionPanel.tsx     # 行动选择面板（四步选择流程）
+│       ├── ExpertPanel.tsx     # 专家团队面板（体力/牵挂度/效率展示）
+│       ├── EventModal.tsx      # 事件弹窗（"北京来电"等特殊事件）
+│       └── EndingScreen.tsx    # 结局画面（胜利/时间耗尽/专家病倒/部门失衡）
+└── public/
+    └── favicon.svg
+```
+
+---
+
+## 可用脚本
+
+| 命令 | 作用 |
+|------|------|
+| `npm install` | 安装所有依赖（首次运行或 `package.json` 变更后执行） |
+| `npm run dev` | 启动开发服务器，带热更新，修改代码即刷新 |
+| `npm run build` | 类型检查 + 生产构建，输出到 `dist/` |
+| `npm run preview` | 本地预览生产构建结果 |
+| `npm run lint` | 运行 ESLint 代码检查 |
+
+---
+
+## 部署到线上
+
+`dist/` 目录是完全自包含的静态文件，可以部署到任何静态托管服务：
+
+### 方案一：GitHub Pages
+
+```bash
+# 1. 构建
+npm run build
+
+# 2. 将 dist/ 推送到 gh-pages 分支
+npx gh-pages -d dist
+```
+
+### 方案二：Vercel / Netlify
+
+无需额外配置，直接将仓库导入即可。构建命令填 `npm run build`，输出目录填 `dist`。
+
+### 方案三：任意 HTTP 服务器
+
+把 `dist/` 目录下的所有文件复制到你的服务器根目录（如 Nginx 的 `/usr/share/nginx/html`），或者用 `npx serve dist` 快速起一个静态服务器。
+
+---
+
+## 技术栈
+
+| 技术 | 用途 |
+|------|------|
+| **React 19** | UI 框架，组件化构建界面 |
+| **TypeScript** | 类型安全，减少运行时错误 |
+| **Vite** | 极快的开发服务器和构建工具 |
+| **Tailwind CSS v4** | 原子化 CSS 框架，复古戈壁色调主题 |
+| **Framer Motion** | React 动画库（页面过渡、进度条、弹窗动画） |
+| **Lucide React** | 图标库（部门图标、行动图标） |
+
+---
+
+## 游戏机制简介
+
+### 核心玩法
+
+- **20 轮**内协调四个部门完成三项核心攻关（理论设计、核燃料提纯、引爆装置）
+- 每轮 **2 次**行动机会，从四种行动中选择
+- 操作专家、管理外援依赖度、应对随机事件
+
+### 四种行动
+
+| 行动 | 效果 | 精神对应 |
+|------|------|----------|
+| 🎯 集中攻关 | 派专家攻克卡点，大幅推进进度 | 自力更生 |
+| 🔄 协同调度 | 协调部门共享资源，帮最弱的环节 | 大力协同 |
+| 🌐 向外求助 | 请求外部支援（依赖度 <30% 后锁定） | 自力更生的反衬 |
+| 💬 组织谈话 | 安抚专家情绪，降低家庭牵挂度 | 无私奉献 |
+
+### 三种结局
+
+| 结局 | 触发条件 |
+|------|----------|
+| ✅ 胜利 | 20 轮内完成全部三项攻关 |
+| ⏰ 时间耗尽 | 20 轮结束但攻关未完成 |
+| 🏥 专家病倒 | 可用专家 ≤ 1 人 |
+| ⚖️ 部门失衡 | 三部门进度差距 >30% 且已到 15 轮后 |
+
+---
+
+## 项目背景
+
+本项目为**中国近现代史纲要课程**的课堂汇报作品。小组以"中国共产党人精神谱系·两弹一星精神"为主题，选择以制作交互式网页游戏的形式，将"自力更生、大力协同、无私奉献"的精神内涵转化为可体验的游戏机制，让玩家在决策中感受那个时代的重量。
+
+> **"干惊天动地事，做隐姓埋名人。"**
+> —— 两弹一星元勋的精神写照
